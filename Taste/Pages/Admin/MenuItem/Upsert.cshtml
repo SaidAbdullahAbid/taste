@@ -1,0 +1,131 @@
+﻿@page
+@model Taste.Pages.Admin.MenuItem.UpsertModel
+@{
+}
+
+<form method="post" enctype="multipart/form-data" >
+	<div class="container">
+		<div class="row px-2 mx-2 border py-4 " style="border-radius: 10px; ">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="col-12 px-3" style="border-bottom: 1px solid #325d88">
+			<h2 class="text-primary">@(Model.menuItemVM.MenuItem.Id != 0 ? "Update" : "Create") Menu Item</h2>
+		</div>
+			@if(Model.menuItemVM.MenuItem.Id != 0)
+			{
+				<input type="hidden" asp-for="menuItemVM.MenuItem.Id">
+			}
+		<div class="col-8 pt-3">
+			<div class="form-group row mt-3">
+				<div class="col-3">
+					<label asp-for="menuItemVM.MenuItem.Name"></label>
+				</div>
+				<div class="col-9">
+					<input class="form-control" asp-for="menuItemVM.MenuItem.Name" />
+					<span class="text-danger" asp-validation-for="menuItemVM.MenuItem.Name"></span>
+				</div>
+			</div>
+			<div class="form-group row mt-3">
+				<div class="col-3">
+					<label asp-for="menuItemVM.MenuItem.Price"></label>
+				</div>
+				<div class="col-9">
+					<input class="form-control" asp-for="menuItemVM.MenuItem.Price" />
+					<span class="text-danger" asp-validation-for="menuItemVM.MenuItem.Price"></span>
+				</div>
+			</div>
+			
+			<div class="form-group row mt-3">
+				<div class="col-3 ">
+					<label class="d-flex align-items-center" asp-for="menuItemVM.MenuItem.Description" style="vertical-align: center;"></label>
+				</div>
+				<div class="col-9">
+					<textarea class="form-control" asp-for="menuItemVM.MenuItem.Description" id="txtDes" style="height : 300px;" > </textarea>	
+				</div>
+			</div>
+			<div class="form-group row mt-3">
+				<div class="col-3">
+					<label asp-for="menuItemVM.MenuItem.Image"></label>
+				</div>
+				<div class="col-9">
+					<input type="file" class="form-control" asp-for="menuItemVM.MenuItem.Name" id="uploadBox" name="files" />
+				</div>
+			</div>
+			<div class=" row mt-3">
+				<div class="col-3">
+					<label asp-for="menuItemVM.MenuItem.CategoryId"></label>
+				</div>
+				<div class="col-9" >
+					@Html.DropDownListFor(m => m.menuItemVM.MenuItem.CategoryId,
+											Model.menuItemVM.CategoryList, 
+											"- Plase select Category -", 
+											new {@class="form-control"})
+
+				</div>
+					<span class="text-danger" asp-validation-for="menuItemVM.MenuItem.CategoryId"></span>
+			</div>
+			<div class=" row mt-3">
+				<div class="col-3">
+					<label asp-for="menuItemVM.MenuItem.FoodTypeId"></label>
+				</div>
+				<div class="col-9" >
+					@Html.DropDownListFor(m => m.menuItemVM.MenuItem.FoodTypeId, 
+											Model.menuItemVM.FoodTypeList, 
+											"- Plase select Category -", 
+											new {@class="form-control"})
+					<span class="text-danger" asp-validation-for="menuItemVM.MenuItem.FoodTypeId"></span>
+				</div>
+
+			</div>
+			<div class="form-group row mt-3">
+				<div class="col-9 offset-3">
+					<div class="row">
+						<div class="col-6">
+							@if(Model.menuItemVM.MenuItem.Id != 0){
+								<button type="submit" class="btn btn-success form-control" > Update </button>
+							}else
+							{
+								<button type="submit" class="btn btn-success form-control"  onsubmit = "return ValidateIndput()"> Create</button>
+							}
+									</div>
+						<div class="col-6">
+							<a class="btn btn-primary form-control" asp-page="./Index">Back to List</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			@if(Model.menuItemVM.MenuItem.Id !=0 )
+			{
+		
+				<div class="col-4 p-3 mt-3 ">
+					<img src="@Model.menuItemVM.MenuItem.Image" style = "border-radius : 10px; border: 2px solid #bbb9b9; width: 100%;" \>
+				</div>
+			}
+		</div>
+</div>
+</form>
+@section scripts {
+
+    <script>
+		console.log("From Script")
+		
+		$(document).ready(function(){
+		  tinymce.init({
+			selector: "textarea", 
+			plugins : "lists", 
+			menubar: "file edit format"
+		});
+			
+
+		});
+		function ValidateIndput(){
+			console.log("Validate Funtion")
+			if(document.getElementById("uploadBox")files.length === 0){
+				swal("Error", "Plase Select An Image"); 
+				return false;
+			}
+			return true;
+		}
+	</script>
+
+}

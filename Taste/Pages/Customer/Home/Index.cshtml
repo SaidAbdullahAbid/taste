@@ -1,0 +1,47 @@
+﻿@page
+@model Taste.Pages.Customer.Home.IndexModel
+@{
+}
+@foreach (var category in Model.Categories)
+{
+	@if (Model.menuItems.Where(m => m.CategoryId == category.Id).Count() > 0)
+	{
+		<div class="container pb-3 backgroundWhite">
+			<div class="col-12">
+				<div class="row ">
+					<h2 class="text-success pl-1"> <b>@category.Name </b></h2>
+					<div class="col-12">
+						<div class="row my-3">
+							@foreach (var menuItem in Model.menuItems.Where(m => m.CategoryId == category.Id))
+							{
+								<divc class="col-lg-3 col-xl-3 col-md-6 pb-4">
+									<div class="card text-center">
+										<img class="card-img-top rounded" src="@menuItem.Image" style="max-height: 200px">
+										<div class="card-body">
+											<h2 class="card-title">@menuItem.Name</h2>
+										</div>
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item">
+												<div class="row">
+													<div class="col-6 ">
+														<span class="p-1 text-white" style="background-color:#e99002; border-radius: 5px;">
+														@menuItem.Category.Name
+														</span>
+													</div>
+													<div class="col-6 fw-bold">@menuItem.Price</div>
+												</div>
+											</li>
+										</ul>
+										<div class="card-footer">
+											<a asp-page="Details" class="btn btn-primary btn-block" asp-route-id="@menuItem.Id">Details</a>
+										</div>
+									</div>
+								</divc>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}

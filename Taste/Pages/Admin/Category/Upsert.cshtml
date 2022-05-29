@@ -1,0 +1,51 @@
+﻿@page
+@model Taste.Pages.Admin.Category.UpsertModel
+@{
+}
+
+<form method="post" asp-action="OnPost">
+	<div class="container">
+		<div class="row px-2 mx-2 border py-4 " style="border-radius: 10px; ">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="col-12 px-3" style="border-bottom: 1px solid #325d88">
+			<h2 class="text-primary">@(Model.categoryObj.Id != 0 ? "Update" : "Create") Category</h2>
+		</div>
+			@if(Model.categoryObj.Id != 0)
+			{
+				<input type="hidden" asp-for="categoryObj.Id">
+			}
+			<div class="col-8 pt-3">
+			<div class="form-group row mt-3">
+				<div class="col-3">
+					<label asp-for="categoryObj.Name"></label>
+				</div>
+				<div class="col-9">
+					<input class="form-control" asp-for="categoryObj.Name" />
+					<span class="text-danger" asp-validation-for="categoryObj.Name"></span>
+				</div>
+			</div>
+			<div class="form-group row mt-3">
+				<div class="col-3">
+					<label asp-for="categoryObj.DisplayOrder"></label>
+				</div>
+				<div class="col-9">
+					<input class="form-control" asp-for="categoryObj.DisplayOrder" />
+					<span class="text-danger" asp-validation-for="categoryObj.DisplayOrder"></span>
+				</div>
+			</div>
+			<div class="form-group row mt-3">
+				<div class="col-9 offset-3">
+					<div class="row">
+						<div class="col-6">
+							<button type="submit" class="btn btn-success form-control" > @(Model.categoryObj.Id != 0 ? "Update" : "Create")</button>
+						</div>
+						<div class="col-6">
+							<a class="btn btn-primary form-control" asp-page="./Index">Back to List</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
